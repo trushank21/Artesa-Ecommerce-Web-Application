@@ -1,0 +1,28 @@
+	{% load static %}
+    <div class="banner">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="banner_item align-items-center" style="background-image:url('{% static 'app/images/coloshop/banner_1.jpg' %}')">
+						<div class="banner_category">
+							<a href="{% url "topwears" %}">Top Wear</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="banner_item align-items-center" style="background-image:url('{% static 'app/images/coloshop/banner_2.jpg' %}')">
+						<div class="banner_category">
+							<a href="{% url "mobile" %}">Mobile</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="banner_item align-items-center" style="background-image:url('{% static 'app/images/coloshop/banner_3.jpg' %}')">
+						<div class="banner_category">
+							<a href="{% url "bottomwears" %}">Bottom Wear</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

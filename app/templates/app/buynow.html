@@ -1,0 +1,64 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Buy Now{% endblock title %}
+{% block main-content %}
+<div class="container">
+ <div class="row mt-5">
+
+  <!-- Order Summary -->
+  <div class="col-sm-6">
+    <h4>Order Summary</h4>
+    <hr>
+    <div class="card mb-2">
+      <div class="card-body">
+        <h5>Product: {{ product.title }}</h5>
+        <p>Quantity: 1</p>
+        <p class="fw-bold">Price: ₹{{ product.discounted_price }}</p>
+      </div>
+    </div>
+    <p class='fw-bold'>Total Cost + Rs. 70 Shipping = ₹{{ total_amount }}</p>
+    <small>Term and Condition: Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, ullam saepe! Iure optio repellat dolor velit, minus rem. Facilis cumque neque numquam laboriosam, accusantium adipisci nisi nihil in et quis?</small>
+  </div>
+
+  <!-- Shipping Address -->
+  <div class="col-sm-3 offset-sm-1">
+    {% if add %}
+      <h4>Select Shipping Address</h4>
+      <hr>
+      <form action="{% url 'paymentdone' %}" method="get">
+        {% csrf_token %}
+        {% for ad in add %}
+        <div class="card mb-2">
+          <div class="card-body">
+            <h5><b>Name:</b> {{ ad.name }}</h5>
+            <p><b>Locality:</b> {{ ad.locality }}</p>
+            <p><b>State:</b> {{ ad.state }}</p>
+            <p><b>City: </b>{{ ad.city }}</p>
+            <p><b>Pincode:</b> {{ ad.zipcode }}</p>
+          </div>
+        </div>
+        <div class="form-check mt-2 mb-3">
+           <input class="form-check-input" type="radio" name="custid" id="custadd{{forloop.counter}}" value="{{ ad.id }}">
+            <label class="form-check-label fw-bold" for="custadd{{forloop.counter}}">
+            Use this address
+            </label>
+        </div>
+        {% endfor %}
+        <input type="hidden" name="buyprod" value="{{ product.id }}">
+        <div class="text-end">
+          <button type="submit" class="btn btn-warning px-5 fw-bold">Place Order</button>
+        </div>
+      </form>
+    {% else %}
+      <h4>Enter Your Address</h4>
+      <hr>
+      <p>You have not registered your Address, so register your address first.</p>
+      <a href="{% url 'profile' %}" class='btn btn-sm btn-danger w-100'>Add Address</a>
+      <p class='mt-2'>You can proceed with checkout later.</p>
+    {% endif %}
+  </div>
+
+ </div>
+</div>
+{% endblock main-content %}

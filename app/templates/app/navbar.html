@@ -1,0 +1,133 @@
+
+
+<header class="header trans_300">
+
+		<!-- Top Navigation -->
+
+		{% comment %} <div class="top_nav">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="top_nav_left">Welcome To ShoppinglyX</div>
+					</div>
+					<div class="col-md-6 text-right">
+						<div class="top_nav_right">
+							<ul class="top_nav_menu ">
+								<!-- Currency / Language / My Account -->
+								<li class="account">
+									<a href="#">My Account<i class="fa fa-angle-down"></i></a>
+									<ul class="account_selection">
+										{% if request.user.is_authenticated %}
+										<a class='dropdown-item' href="{% url "profile" %}">Profile<i class='bx  bx-user'></i></a>
+										<form action="{% url 'logout' %}" method="post">
+											{% csrf_token %}
+    										<button type="submit" class="dropdown-item">Logout</button>
+  										</form>
+										{% else %}
+										<li><a href="{% url "login" %}">Sign In</a></li>
+										<li><a href="{% url "customerregistration" %}">Register</a></li>
+										{% endif %}
+										
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> {% endcomment %}
+
+		<!-- Main Navigation -->
+
+		<div class="main_nav_container">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12 text-right">
+						<div class="logo_container">
+							<a href="{% url "home" %}">Art<span>esa</span></a>
+						</div>
+						<nav class="navbar">
+							<ul class="navbar_menu">
+								<li><a class='{{hm}}' href="{% url "home" %}">home</a></li>
+								<li><a class='{{sp}}' href="{% url "shop" %}">shop</a></li>
+								<li><a class='{{od}}' href="{% url "orders" %}">Orders</a></li>
+								<li><a class='{{ct}}' href="{% url "contact" %}">contact</a></li>
+							</ul>
+							<ul class="navbar_user mt-3" >
+								{% comment %} <li><input type="search" class="form-control" name="search" value='' placeholder="Search.."></li> {% endcomment %}
+								{% comment %} <li><a href="{% url "profile" %}"><i class="fa fa-user" aria-hidden="true"></i></a></li> {% endcomment %}
+								 
+								<li class="checkout">
+									<a href="{% url "showcart" %}" class='ms-4 mb-4' >
+										<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+										<span id="cartCount" class="checkout_items">{{ cart_count }}</span>
+									</a>
+								</li>
+								
+									<div class="dropdown d-inline">
+									<button class="btn mb-2 ms-2 me-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<i class="fa fa-user" aria-hidden="true"></i>
+									</button>
+									<div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
+										<ul>
+											{% if request.user.is_authenticated %}
+											<li>
+										
+												<a class="dropdown-item " href="{% url "profile" %}"> <i class='bx  bx-user-id-card'>Profile</a></i>
+										
+												<a class="dropdown-item" href="{% url "passwordchange" %}"><i class='ms-5 bx  bx-lock-keyhole'>Change Password</a></i>
+											</li>
+											<br>
+											{% else %}
+											<li><a class="dropdown-item text-center" href="{% url "login" %}"><i class='bx  bx-key-alt'> Login</a></i> </li><br>
+											<li><a class="dropdown-item text-center" href="{% url "customerregistration" %}"><i class='bx  bx-form'> Register</a></i></li><br>
+											{% endif %}
+										</ul>
+									</div>
+									</div>
+							</ul>
+								{% if request.user.is_authenticated %}
+							
+           <button class="alert alert-primary border-0 mb-2 p-1 me-2" type="submit">&nbsp{{ request.user.username|slice:":1"|capfirst }}&nbsp</button>
+            
+								<form action="{% url 'logout' %}"  method="post">
+											{% csrf_token %}
+    										<button class="btn btn-sm btn-danger mb-2 ms-1" type="submit">Logout</button> 
+  											</form>	
+											{% endif %}
+
+							<div class="hamburger_container">
+								<i class="fa fa-bars" aria-hidden="true"></i>
+							</div>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</header>
+
+	<div class="fs_menu_overlay"></div>
+	<div class="hamburger_menu mb-2">
+		<div class="hamburger_close"><i class="fa fa-times" aria-hidden="true"></i></div>
+		<div class="hamburger_menu_content text-right">
+			<ul class="menu_top_nav">
+				{% if not request.user.is_authenticated %}
+				<li class="menu_item has-children">
+					<a href="#">
+						My Account
+						<i class="fa fa-angle-down"></i>
+					</a>
+					<ul class="menu_selection">
+						<li><a href="{% url "login" %}"><i class='bx  bx-key'></i> Sign In</a></li>
+						<li><a href="{% url "customerregistration" %}"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a></li>
+					</ul>
+				</li>
+				{% endif %}
+				<li class="menu_item"><a href="{% url "home" %}" class='{% if hm %}text-danger{% endif %} '>Home</a></li>
+				<li class="menu_item"><a href="{% url "shop" %}" class='{% if sp %}text-danger{% endif %}' >Shop</a></li>
+				<li class="menu_item"><a href="{% url "orders" %}" class='{% if od %}text-danger{% endif %}'>Orders</a></li>
+				<li class="menu_item"><a href="{% url "contact" %}" class='{% if ct %}text-danger{% endif %}' >contact</a></li>
+			</ul>
+		</div>
+	</div>

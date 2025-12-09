@@ -1,0 +1,69 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Mobiles{% endblock title %}
+
+
+{% block main-content %}		
+<div class="container">
+			<div class="row">
+				<div class="col text-center">
+					<div class="section_title new_arrivals_title">
+						<h2>Mobiles</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row align-items-center">
+				<div class="col text-center">
+					<div class="new_arrivals_sorting">
+
+							{% comment %} <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center {{m}}" data-filter=".topwears">Mobiles</li> {% endcomment %}
+
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
+
+						<!-- Product 1 -->
+						{% for al in mobiles %}
+						<a href="{% url "product-detail" al.id %}">
+						<div class="product-item  mb-3">
+							<div class="product discount product_filter ">
+								<div class="product_image">
+									<img src="{{al.product_image.url}}" style="height:220px;" class='p-4' alt="">
+								</div>
+								<div class="favorite favorite_left"></div>
+								<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>
+								<div class="product_info">
+									<h6 class="product_name"><a href="single.html">{{al.title}}</a></h6>
+									<div class="product_price">Rs.{{al.discounted_price}}<span>{{al.selling_price}}</span></div>
+								</div>
+							</div>
+							<div class="red_button add_to_cart_button">View Detail</a></div>
+						</div>
+						{% endfor %}
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    {% endblock main-content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

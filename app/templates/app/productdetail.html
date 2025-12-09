@@ -1,0 +1,49 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}{{ product.title }}{% endblock title %}
+
+{% block main-content %}
+<div class="container my-5">
+    <div class="row">
+        <!-- Product Image -->
+        <div class="col-md-6 text-center align-self-center">
+            <img src="{{ product.product_image.url }}" alt="{{ product.title }}" style="height:400px;" class="img-fluid img-thumbnail">
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-5 offset-md-1">
+            <h2>{{ product.title }}</h2>
+            <p>{{ product.description }}</p>
+            <h4>
+                ₹{{ product.discounted_price }}
+                <small class="text-decoration-line-through text-muted">₹{{ product.selling_price }}</small>
+            </h4>
+
+            <!-- Add to Cart / Go to Cart Logic -->
+            {% if request.user.is_authenticated %}
+                {% if item_already_in_cart %}
+                    <a href="{% url 'showcart' %}" class="btn btn-warning shadow px-5 py-2 mt-2">Go to Cart</a>
+                {% else %}
+                    <form action="{% url 'add-to-cart' %}" method="get" class="d-inline">
+                        <input type="hidden" name="prod_id" value="{{ product.id }}">
+                        <button type="submit" class="btn btn-primary shadow px-4 py-2 mt-2">Add to Cart</button>
+                    </form>
+                {% endif %}
+                <a href="{% url 'buy-now' product.id %}" class="btn btn-danger shadow px-4 py-2 mt-2 ms-2">Buy Now</a>
+            {% else %}
+                <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-primary shadow px-4 py-2 mt-2">Login to Add to Cart</a>
+                <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-danger shadow px-4 py-2 mt-2 ms-2">Login to Buy</a>
+            {% endif %}
+
+            <!-- Offers -->
+            <h5 class="mt-4">Available Offers</h5>
+            <ul>
+                <li>Bank Offer: 5% Unlimited Cashback on Axis Bank Credit Card</li>
+                <li>Special Price: Extra ₹3000 off (price inclusive of discount)</li>
+                <li>No Cost EMI ₹1,667/month. Standard EMI also available</li>
+                <li>Partner Offer: ₹2000 Flipkart Gift Card on Every 1000th Transaction with new Visa Debit/Credit Card</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock main-content %}

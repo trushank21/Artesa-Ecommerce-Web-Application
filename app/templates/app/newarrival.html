@@ -1,0 +1,54 @@
+{% load static %}
+<div class="new_arrivals">
+		<div class="container">
+			<div class="row">
+				<div class="col text-center">
+					<div class="section_title new_arrivals_title">
+						<h2>New Arrivals</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row align-items-center">
+				<div class="col text-center">
+					<div class="new_arrivals_sorting">
+						<ul class="arrivals_grid_sorting clearfix button-group filters-button-group me-4">
+							<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked" data-filter="*">all</li>
+							<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".topwears">Top Wear</li>
+							<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".mobiles">Mobiles</li>
+							<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".bottomwears">Bottom Wear</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
+
+						<!-- Product 1 -->
+						{% for al in all %}
+						<a href="{% url "product-detail" al.id %}">
+						<div class="product-item {% if al.category == 'TW' %} topwears {% endif %}
+    						{% if al.category == 'BW' %} bottomwears {% endif %}
+    						{% if al.category == 'M' %} mobiles {% endif %} mb-3">
+							<div class="product discount product_filter ">
+								<div class="product_image ">
+									<img src="{{al.product_image.url}}" style="height:250px;" class='p-2' alt="">
+									
+								</div>
+								<div class="favorite favorite_left"></div>
+								<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>
+								<div class="product_info">
+									<h6 class="product_name"><a href="single.html">{{al.title}}</a></h6>
+									<div class="product_price">Rs.{{al.discounted_price}}<span>{{al.selling_price}}</span></div>
+								</div>
+							</div>
+							<div class="red_button add_to_cart_button">View Detail</a></div>
+						</div>
+						{% endfor %}
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

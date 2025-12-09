@@ -1,0 +1,483 @@
+{% comment %} <!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="{% static 'app/css/owl.carousel.min.css' %}">
+
+
+
+
+    <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+    <title>ShoppingX | {% block title %} {% endblock title %} </title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+     <div class="container">
+       <a class="navbar-brand" href="/">ShoppingX</a>
+       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+       </button>
+       <div class="collapse navbar-collapse" id="navbarSupportedContent">
+         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+           <li class="nav-item">
+             <a class="nav-link active" aria-current="page" href="/">Home</a>
+           </li>
+           <li class="nav-item dropdown">
+             <a class="nav-link dropdown-toggle text-white" href="#" id="electronicsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+               Electronics
+             </a>
+             <ul class="dropdown-menu" aria-labelledby="electronicsDropdown">
+               <li><a class="dropdown-item" href="{% url 'mobile' %}">Mobile</a></li>
+               <li><a class="dropdown-item" href="#">Laptop</a></li>
+             </ul>
+           </li>
+           <li class="nav-item dropdown">
+             <a class="nav-link dropdown-toggle text-white" href="#" id="fashionDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+               Fashion
+             </a>
+             <ul class="dropdown-menu" aria-labelledby="fashionDropdown">
+               <li><a class="dropdown-item" href="#">Top Wear</a></li>
+               <li><a class="dropdown-item" href="#">Bottom Wear</a></li>
+             </ul>
+           </li>
+         </ul>
+         <form class="d-flex">
+           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+           {% if request.user.is_authenticated %}
+           <button class="btn btn-warning" type="submit">{{ request.user.username|slice:":1"|capfirst }}</button>
+            {% endif %}
+          </form>
+          <div>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              {% if request.user.is_authenticated %}
+            
+            
+            
+           <li class="nav-item dropdown mx-2">
+              <a class="nav-link dropdown-toggle text-white" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{request.user.username|capfirst}}
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+                <li><a class="dropdown-item" href="{% url 'orders' %}">Orders</a></li>
+                <li><a class="dropdown-item" href="{% url 'passwordchange' %}">Change Password</a></li>
+                <li>
+  <form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="dropdown-item">Logout</button>
+  </form>
+</li>
+
+              </ul>
+            </li>
+            <li class="nav-item mx-2">
+             <a href="{% url 'showcart' %}" class="nav-link text-white"><span class="badge bg-danger">4</span> Cart </a>
+            </li>
+            {% else %}
+            <li class="nav-item mx-2">
+             <a href="{% url 'login' %}" class="nav-link text-white">Login</a>
+            </li>
+            <li class="nav-item mx-2">
+             <a href="{% url 'customerregistration' %}" class="nav-link text-white">Registration</a>
+            </li>
+            {% endif %}
+          </ul>
+         </div>
+       </div>
+     </div>
+    </nav>
+    {% block banner_slider %} {% endblock banner_slider %}
+    {% block livesale %} {% endblock livesale %}
+    {% block main-content %} {% endblock main-content %}
+
+
+    <footer class="container-fluid bg-dark text-center p-2 mt-5" >
+        <small class="text-white">Copyright &copy; 2021 || Designed By GeekyShows || </small>
+        <img src="{% static 'app/images/payment.png' %}" alt="" srcset="" class="img-fluid" height="2px">
+    </footer> 
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <script src="{% static 'app/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'app/js/all.min.js' %}"></script>
+    <script src="{% static 'app/js/myscript.js' %}"></script>
+  </body>
+</html> {% endcomment %}
+
+
+{% comment %} ---------------------------------------------------------------------------------------- {% endcomment %}
+
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+<title>ShoppinglyX | {% block title %}{% endblock title %}</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Colo Shop Template">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'app/styles/bootstrap4/bootstrap.min.css' %}">
+<link href="{% static "app/plugins/font-awesome-4.7.0/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="{% static "app/plugins/OwlCarousel2-2.2.1/owl.carousel.css" %}">
+<link rel="stylesheet" type="text/css" href="{% static "app/plugins/OwlCarousel2-2.2.1/owl.theme.default.css" %}">
+<link rel="stylesheet" type="text/css" href="{% static 'app/plugins/OwlCarousel2-2.2.1/animate.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'app/styles/main_styles.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'app/styles/responsive.css' %}">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link href='https://cdn.boxicons.com/3.0.6/fonts/basic/boxicons.min.css' rel='stylesheet'>
+<link rel="stylesheet" href="{% static 'app/css/owl.carousel.min.css' %}">
+<style>
+  /* Apply padding to all pages except home-page */
+body:not(.home-page) {
+    padding-top: 100px !important;
+}
+
+/* Home page gets smaller or zero padding */
+body.home-page {
+    padding-top: 0 !important;
+}
+
+</style>
+<link rel="stylesheet" href="{% static 'owl.carousel.min.css' %}">
+<link rel="stylesheet" href="{% static 'owl.theme.default.min.css' %}">
+
+<link rel="stylesheet" href="{% static 'app/css/style.css' %}">
+ {% endcomment %}
+
+
+<link href='https://cdn.boxicons.com/3.0.6/fonts/basic/boxicons.min.css' rel='stylesheet'>
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+
+<!-- Font Awesome -->
+<link href="{% static 'app/plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet">
+
+<!-- Owl Carousel (ONLY THESE TWO – correct version) -->
+<link rel="stylesheet" href="{% static 'app/plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
+<link rel="stylesheet" href="{% static 'app/plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{% static 'app/styles/main_styles.css' %}">
+<link rel="stylesheet" href="{% static 'app/styles/responsive.css' %}">
+<link rel="stylesheet" href="{% static 'app/css/style.css' %}">
+
+<style>
+/* Fix OwlCarousel mobile issues */
+.owl-carousel .owl-stage {
+    display: flex !important;
+}
+.owl-carousel .owl-item {
+    display: flex;
+    justify-content: center;
+}
+.item {
+    text-align: center;
+}
+body:not(.home-page) { padding-top: 100px !important; }
+body.home-page { padding-top: 0 !important; }
+
+
+
+/* Reset nav container */
+.owl-nav {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: absolute;
+    top: 40%;
+    width: 100%;
+    z-index: 20;
+}
+
+/* Smaller arrow buttons */
+.owl-nav .owl-prev,
+.owl-nav .owl-next {
+    position: absolute;
+    font-size: 18px !important;   /* SMALLER SIZE */
+    background: rgba(255, 255, 255, 0.8) !important;
+    color: #000 !important;
+    width: 35px;                  /* SMALLER CIRCLE */
+    height: 35px;                 /* SMALLER CIRCLE */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+/* Hover effect (optional) */
+.owl-nav .owl-prev:hover,
+.owl-nav .owl-next:hover {
+    background: rgba(255, 255, 255, 1) !important;
+    transform: scale(1.05);
+}
+
+/* Position left/right */
+.owl-nav .owl-prev {
+    left: -15px !important;
+}
+
+.owl-nav .owl-next {
+    right: -15px !important;
+}
+
+/* Mobile screens below 450px — force 2-column clean layout */
+@media (max-width: 450px) {
+    .product-grid .product-item {
+        width: 48% !important;
+        margin: 1% !important;
+    }
+}
+
+/* Tiny screens < 350px — stack items */
+@media (max-width: 350px) {
+    .product-grid .product-item {
+        width: 100% !important;
+        margin-bottom: 15px;
+    }
+}
+
+
+/* Fix filter button layout on small screens */
+@media (max-width: 450px) {
+    .arrivals_grid_sorting {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .grid_sorting_button {
+        width: 45% !important;
+        margin: 5px !important;
+        padding: 8px 10px !important;
+        text-align: center;
+        font-size: 14px !important;
+    }
+}
+
+/* Screens < 350px */
+@media (max-width: 350px) {
+    .grid_sorting_button {
+        width: 100% !important;
+    }
+}
+
+
+
+
+    #loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    .spinner {
+        width: 50px;
+        height: 50px;
+        border: 6px solid #ddd;
+        border-top-color: #3498db;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+
+
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href='https://cdn.boxicons.com/3.0.6/fonts/brands/boxicons-brands.min.css' rel='stylesheet'>
+
+
+    
+</head>
+
+<body class="{% block body_class %}{% endblock body_class %}">
+    <div id="loader">
+        <div class="spinner"></div>
+    </div>
+
+
+<div class="super_container">
+
+
+
+	<!-- Header -->
+{% include "app/navbar.html" %}
+
+
+	<!-- Slider -->
+{% block slider %}{% endblock slider %}
+
+	<!-- Banner -->
+{% block banner %}{% endblock banner %}
+
+	<!-- New Arrivals -->
+{% block newarrival %}{% endblock newarrival %}
+
+	<!-- Deal of the week -->
+{% block dealoftheweek %}{% endblock dealoftheweek %}
+
+	<!-- Best Sellers -->
+{% block bestsellers %}{% endblock bestsellers %}
+
+{% block main-content %}{% endblock main-content %}
+
+<!-- Benefit -->
+{% block benefit %}{% endblock benefit %}
+
+
+	<!-- Blogs -->
+{% block blogs %}{% endblock blogs %}
+
+
+	<!-- Newsletter -->
+{% block newsletter %}{% endblock newsletter %}
+
+	<!-- Footer -->
+{% include "app/footer.html" %}
+
+
+</div>
+
+{% comment %} <script src="{% static "app/js/coloshop/jquery-3.2.1.min.js" %}"></script>
+<script src="{% static 'app/styles/bootstrap4/popper.js' %}"></script>
+<script src="{% static 'app/styles/bootstrap4/bootstrap.min.js' %}"></script>
+<script src="{% static 'app/plugins/Isotope/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'app/plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+<script src="{% static 'app/plugins/easing/easing.js' %}"></script>
+<script src="{% static 'app/js/coloshop/custom.js' %}"></script>
+
+
+
+
+
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <script src="{% static 'app/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'app/js/all.min.js' %}"></script>
+    <script src="{% static 'app/js/myscript.js' %}"></script>  {% endcomment %}
+
+
+
+
+
+
+
+<!-- jQuery first -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Owl Carousel (only once, correct path) -->
+<script src="{% static 'app/plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+
+<!-- Other scripts -->
+<script src="{% static 'app/js/all.min.js' %}"></script>
+<script src="{% static 'app/styles/bootstrap4/popper.js' %}"></script>
+<script src="{% static 'app/styles/bootstrap4/bootstrap.min.js' %}"></script>
+<script src="{% static 'app/plugins/Isotope/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'app/plugins/easing/easing.js' %}"></script>
+<script src="{% static 'app/js/coloshop/custom.js' %}"></script>
+<script src="{% static 'app/js/myscript.js' %}"></script>
+
+{% comment %} <script>
+$("#slider1, #slider2, #slider3").owlCarousel({
+    loop: true,
+    margin: 10,
+    nav: true,
+    navText: [
+        '<i class="fa fa-chevron-left"></i>',
+        '<i class="fa fa-chevron-right"></i>'
+    ],
+    // === NEW AUTOPLAY SETTINGS ===
+    autoplay: true,        // Enable autoplay
+    autoplayTimeout: 3000, // Set time between slides (3000ms = 3 seconds)
+    autoplayHoverPause: true, // Pause sliding when the user hovers over the carousel
+    // =============================
+    responsive: {
+        0: {
+            items: 2
+        },
+        600: {
+            items: 3
+        },
+        1000: {
+            items: 5
+        }
+    }
+});
+</script> {% endcomment %}
+
+
+<script>
+$("#slider1, #slider2, #slider3").owlCarousel({
+    loop: true,
+    margin: 10,
+    nav: true,
+    navText: [
+        '<i class="fa fa-chevron-left"></i>',
+        '<i class="fa fa-chevron-right"></i>'
+    ],
+    autoplay: true,
+    autoplayTimeout: 3000,
+    autoplayHoverPause: true,
+    responsive: {
+        0: { items: 2 },
+        600: { items: 3 },
+        1000: { items: 4 }   // <-- FIX HERE
+    }
+});
+
+</script>
+
+
+
+<script>
+window.addEventListener("load", function () {
+    const loader = document.getElementById("loader");
+
+    setTimeout(() => {
+        loader.style.opacity = "0";
+        loader.style.transition = "opacity 0.5s ease";
+
+        setTimeout(() => {
+            loader.style.display = "none";
+        }, 500);
+    }, 200); // <-- delay (in milliseconds)
+});
+
+</script>
+
+
+</body>
+
+</html>

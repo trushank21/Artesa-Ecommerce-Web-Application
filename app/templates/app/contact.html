@@ -1,0 +1,105 @@
+{% extends 'app/base.html' %}
+
+{% load static %}
+{% block title %}Contact{% endblock title %}
+
+{% block main-content %}
+
+<!-- Page Header -->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col text-center">
+            <h2 class="fw-bold">Contact Us</h2>
+            <p class="text-muted">We’re here to help and answer your questions.</p>
+            <hr class="bg-danger" style="height:4px;">
+        </div>
+    </div>
+</div>
+
+<!-- Contact Section -->
+<div class="container my-5">
+    <div class="row">
+
+        <!-- Contact Form -->
+        <div class="col-lg-6">
+            <div class="card shadow-lg p-4 border-0">
+                <h4 class="fw-bold mb-4 text-danger">Send Us a Message</h4>
+                <form action='' method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Your Name</label>
+                        <input type="text" id='yname' name="your_name" class="form-control shadow-sm" placeholder="Enter your full name" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Email Address</label>
+                        <input type="email" id='eaddress' name="email_address" class="form-control shadow-sm" placeholder="example@gmail.com" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Message</label>
+                        <textarea name="message" id='msg' rows="5" class="form-control shadow-sm" placeholder="Write your message here..." required></textarea>
+                    </div>
+
+                    {% comment %} <button class="btn btn-danger px-4 py-2 fw-bold" id='btnsave' >Send Message</button> {% endcomment %}
+                    <input type="button" class='btn btn-danger px-4 py-2 fw-bold' id='btnsave' value="save" >
+                </form>
+                
+            </div>
+        </div>
+
+        <!-- Store Info -->
+        <div class="col-lg-6 mt-4 mt-lg-0">
+            <div class="card shadow-lg p-4 border-0">
+                <h4 class="fw-bold mb-4 text-danger">Contact Information</h4>
+
+                <p>
+                    <strong>📍 Address:</strong><br>
+                    123 Coloshop Market, Near Shopping Center,<br>
+                    Ahmedabad, Gujarat - 380001
+                </p>
+
+                <p>
+                    <strong>📞 Phone:</strong><br>
+                    <a href="tel:+919876543210" class="text-dark">+91 98765 43210</a>
+                </p>
+
+                <p>
+                    <strong>📧 Email:</strong><br>
+                    <a href="mailto:support@coloshop.com" class="text-dark">support@coloshop.com</a>
+                </p>
+
+                <p>
+                    <strong>⏰ Working Hours:</strong><br>
+                    Monday – Saturday : 10:00 AM – 7:00 PM<br>
+                    Sunday : Closed
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Google Map -->
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col">
+            <div class="card shadow-lg border-0">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3674.29814691367!2d72.5713628!3d23.0204975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e84f95c878e3f%3A0xe52e8c03a7f1f6be!2sAhmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1633425939084!5m2!1sen!2sin" 
+                    width="100%" 
+                    height="350" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock main-content %}
+
+
+
+
